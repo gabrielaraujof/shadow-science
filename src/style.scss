@@ -1,0 +1,59 @@
+$offsets: (
+  top: 0 1px,
+  top-right: -1px 1px,
+  right: -1px 0,
+  bottom-right: -1px -1px,
+  bottom: 0 -1px,
+  bottom-left: 1px -1px,
+  left: 1px 0,
+  top-left: 1px 1px
+);
+
+@function key-shadow($position) {
+  @return map-get($offsets, $position) 2px rgba(0, 0, 0, 0.2);
+}
+
+@function ambient-shadow($position) {
+  @return map-get($offsets, $position) 8px rgba(0, 0, 0, 0.08),
+    0 0 16px rgba(0, 0, 0, 0.04);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+main {
+  padding: 2rem;
+}
+
+section {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+article {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 8rem;
+  min-height: 8rem;
+  margin: 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.02);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+}
+
+@each $pos, $val in $offsets {
+  .key-#{$pos} {
+    box-shadow: key-shadow($pos);
+  }
+}
+
+@each $pos, $val in $offsets {
+  .shadow-#{$pos} {
+    box-shadow: key-shadow($pos), ambient-shadow($pos);
+  }
+}
