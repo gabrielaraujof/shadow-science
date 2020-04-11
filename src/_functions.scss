@@ -1,0 +1,19 @@
+@import 'variables';
+
+@function offset($position: center, $elevation: resting) {
+  $offsets: map-get($offsets-map, $position);
+  $x-offset: map-get($offsets, x) * map-get($elevation-map, $elevation);
+  $y-offset: map-get($offsets, y) * map-get($elevation-map, $elevation);
+  @return $x-offset $y-offset;
+}
+
+@function key-shadow($position: center, $elevation: resting) {
+  $factor: map-get($elevation-map, $elevation);
+  @return offset($position, $elevation) 2px * $factor rgba(0, 0, 0, 0.2);
+}
+
+@function ambient-shadow($position: center, $elevation: resting) {
+  $factor: map-get($elevation-map, $elevation);
+  @return offset($position, $elevation) 8px * $factor rgba(0, 0, 0, 0.08),
+    0 0 16px * $factor rgba(0, 0, 0, 0.04);
+}
