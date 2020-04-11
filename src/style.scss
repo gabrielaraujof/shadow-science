@@ -62,15 +62,11 @@ article {
 }
 
 @each $pos, $val in $offsets-map {
-  .key-light {
-    .#{$pos} {
-      box-shadow: key-shadow($pos, resting);
-    }
+  [key-light-pos="#{$pos}"] {
+    box-shadow: key-shadow($pos, resting);
+  }
 
-    &.ambient-light {
-      .#{$pos} {
-        box-shadow: key-shadow($pos, resting), ambient-shadow($pos, resting);
-      }
-    }
+  [ambient-light-pos="#{$pos}"] {
+    box-shadow: key-shadow($pos, resting), ambient-shadow($pos, resting);
   }
 }
