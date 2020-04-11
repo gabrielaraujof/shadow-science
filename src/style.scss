@@ -16,22 +16,22 @@ $elevation-map: (
   floating: 8,
 );
 
-@function offset($position, $elevation) {
+@function offset($position: center, $elevation: resting) {
   $offsets: map-get($offsets-map, $position);
   $x-offset: map-get($offsets, x) * map-get($elevation-map, $elevation);
   $y-offset: map-get($offsets, y) * map-get($elevation-map, $elevation);
   @return $x-offset $y-offset;
 }
 
-@function key-shadow($position, $elevation) {
+@function key-shadow($position: center, $elevation: resting) {
   $factor: map-get($elevation-map, $elevation);
   @return offset($position, $elevation) 2px * $factor rgba(0, 0, 0, 0.2);
 }
 
-@function ambient-shadow($position, $elevation) {
+@function ambient-shadow($position: center, $elevation: resting) {
   $factor: map-get($elevation-map, $elevation);
   @return offset($position, $elevation) 8px * $factor rgba(0, 0, 0, 0.08),
-    0 0 16px * $factor rgba(0, 0, 0, 0.04);
+  0 0 16px * $factor rgba(0, 0, 0, 0.04);
 }
 
 * {
@@ -63,19 +63,19 @@ article {
 }
 
 [shadow-sci] {
-  box-shadow: key-shadow(center, resting), ambient-shadow(center, resting);
+  box-shadow: key-shadow(), ambient-shadow();
 }
 
 @each $pos, $val in $offsets-map {
   [shadow-sci-pos="#{$pos}"] {
-    box-shadow: key-shadow($pos, resting), ambient-shadow($pos, resting);
+    box-shadow: key-shadow($pos), ambient-shadow($pos);
 
     &[shadow-sci-source="ambient-light-only"] {
-      box-shadow: ambient-shadow($pos, resting);
+      box-shadow: ambient-shadow($pos);
     }
 
     &[shadow-sci-source="key-light-only"] {
-      box-shadow: key-shadow($pos, resting);
+      box-shadow: key-shadow($pos);
     }
 
     @each $elevation, $val in $elevation-map {
