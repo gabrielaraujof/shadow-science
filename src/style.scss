@@ -1,5 +1,5 @@
 $offsets-map: (
-  center: (x: 0, y: 0),
+  center: ( x: 0, y: 0 ),
   top: ( x: 0, y: 1px ),
   top-right: ( x: -1px, y: 1px ),
   right: ( x: -1px, y: 0 ),
@@ -12,7 +12,7 @@ $offsets-map: (
 
 $elevation-map: (
   resting: 1,
-  pressed: 4,
+  raised: 4,
   floating: 8,
 );
 
@@ -76,6 +76,20 @@ article {
 
     &[shadow-sci-source="key-light-only"] {
       box-shadow: ambient-shadow($pos, resting);
+    }
+
+    @each $elevation, $val in $elevation-map {
+      &[shadow-sci-state="#{$elevation}"] {
+        box-shadow: key-shadow($pos, $elevation), ambient-shadow($pos, $elevation);
+
+        &[shadow-sci-source="ambient-light-only"] {
+          box-shadow: key-shadow($pos, $elevation);
+        }
+  
+        &[shadow-sci-source="key-light-only"] {
+          box-shadow: ambient-shadow($pos, $elevation);
+        }
+      }
     }
   }
 }
