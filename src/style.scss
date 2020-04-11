@@ -1,4 +1,5 @@
 $offsets-map: (
+  center: (x: 0, y: 0),
   top: ( x: 0, y: 1px ),
   top-right: ( x: -1px, y: 1px ),
   right: ( x: -1px, y: 0 ),
@@ -61,16 +62,20 @@ article {
   text-align: center;
 }
 
+[shadow-sci] {
+  box-shadow: key-shadow(center, resting), ambient-shadow(center, resting);
+}
+
 @each $pos, $val in $offsets-map {
-  .key-light {
-    .#{$pos} {
+  [shadow-sci-pos="#{$pos}"] {
+    box-shadow: key-shadow($pos, resting), ambient-shadow($pos, resting);
+
+    &[shadow-sci-source="ambient-light-only"] {
       box-shadow: key-shadow($pos, resting);
     }
 
-    &.ambient-light {
-      .#{$pos} {
-        box-shadow: key-shadow($pos, resting), ambient-shadow($pos, resting);
-      }
+    &[shadow-sci-source="key-light-only"] {
+      box-shadow: ambient-shadow($pos, resting);
     }
   }
 }
