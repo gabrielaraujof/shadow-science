@@ -71,11 +71,11 @@ article {
     box-shadow: key-shadow($pos, resting), ambient-shadow($pos, resting);
 
     &[shadow-sci-source="ambient-light-only"] {
-      box-shadow: key-shadow($pos, resting);
+      box-shadow: ambient-shadow($pos, resting);
     }
 
     &[shadow-sci-source="key-light-only"] {
-      box-shadow: ambient-shadow($pos, resting);
+      box-shadow: key-shadow($pos, resting);
     }
 
     @each $elevation, $val in $elevation-map {
@@ -83,11 +83,11 @@ article {
         box-shadow: key-shadow($pos, $elevation), ambient-shadow($pos, $elevation);
 
         &[shadow-sci-source="ambient-light-only"] {
-          box-shadow: key-shadow($pos, $elevation);
+          box-shadow: ambient-shadow($pos, $elevation);
         }
   
         &[shadow-sci-source="key-light-only"] {
-          box-shadow: ambient-shadow($pos, $elevation);
+          box-shadow: key-shadow($pos, $elevation);
         }
       }
     }
