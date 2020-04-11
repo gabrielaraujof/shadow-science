@@ -1,21 +1,36 @@
-$offsets: (
-  top: 0 1px,
-  top-right: -1px 1px,
-  right: -1px 0,
-  bottom-right: -1px -1px,
-  bottom: 0 -1px,
-  bottom-left: 1px -1px,
-  left: 1px 0,
-  top-left: 1px 1px
+$offsets-map: (
+  top: ( x: 0, y: 1px ),
+  top-right: ( x: -1px, y: 1px ),
+  right: ( x: -1px, y: 0 ),
+  bottom-right: ( x: -1px, y: -1px ),
+  bottom: ( x: 0, y: -1px ),
+  bottom-left: ( x: 1px, y: -1px ),
+  left: ( x: 1px, y: 0 ),
+  top-left: ( x: 1px, y: 1px ),
 );
 
-@function key-shadow($position) {
-  @return map-get($offsets, $position) 2px rgba(0, 0, 0, 0.2);
+$elevation-map: (
+  resting: 1,
+  pressed: 4,
+  floating: 8,
+);
+
+@function offset($position, $elevation) {
+  $offsets: map-get($offsets-map, $position);
+  $x-offset: map-get($offsets, x) * map-get($elevation-map, $elevation);
+  $y-offset: map-get($offsets, y) * map-get($elevation-map, $elevation);
+  @return $x-offset $y-offset;
 }
 
-@function ambient-shadow($position) {
-  @return map-get($offsets, $position) 8px rgba(0, 0, 0, 0.08),
-    0 0 16px rgba(0, 0, 0, 0.04);
+@function key-shadow($position, $elevation) {
+  $factor: map-get($elevation-map, $elevation);
+  @return offset($position, $elevation) 2px * $factor rgba(0, 0, 0, 0.2);
+}
+
+@function ambient-shadow($position, $elevation) {
+  $factor: map-get($elevation-map, $elevation);
+  @return offset($position, $elevation) 8px * $factor rgba(0, 0, 0, 0.08),
+    0 0 16px * $factor rgba(0, 0, 0, 0.04);
 }
 
 * {
@@ -46,14 +61,16 @@ article {
   text-align: center;
 }
 
-@each $pos, $val in $offsets {
-  .key-#{$pos} {
-    box-shadow: key-shadow($pos);
-  }
-}
+@each $pos, $val in $offsets-map {
+  .key-light {
+    .#{$pos} {
+      box-shadow: key-shadow($pos, resting);
+    }
 
-@each $pos, $val in $offsets {
-  .shadow-#{$pos} {
-    box-shadow: key-shadow($pos), ambient-shadow($pos);
+    &.ambient-light {
+      .#{$pos} {
+        box-shadow: key-shadow($pos, resting), ambient-shadow($pos, resting);
+      }
+    }
   }
 }
