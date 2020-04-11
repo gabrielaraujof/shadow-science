@@ -1,0 +1,21 @@
+@import 'variables';
+@import 'functions';
+@import 'mixins';
+
+[shadow-sci] {
+  box-shadow: key-shadow(), ambient-shadow();
+
+  @include shadow-source;
+
+  @include shadow-elevation;
+}
+
+@each $pos, $val in $offsets-map {
+  [shadow-sci-pos="#{$pos}"] {
+    box-shadow: key-shadow($pos), ambient-shadow($pos);
+
+    @include shadow-source($pos);
+
+    @include shadow-elevation($pos);
+  }
+}

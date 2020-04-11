@@ -1,0 +1,29 @@
+@import 'shadow-sci/shadow-sci';
+
+* {
+  box-sizing: border-box;
+}
+
+main {
+  padding: 2rem;
+}
+
+section {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+article {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 8rem;
+  min-height: 8rem;
+  margin: 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.02);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+}

@@ -1,0 +1,21 @@
+@import 'functions';
+
+@mixin shadow-source($pos: center, $elevation: resting) {
+  &[shadow-sci-source='ambient-light-only'] {
+    box-shadow: ambient-shadow($pos, $elevation);
+  }
+
+  &[shadow-sci-source='key-light-only'] {
+    box-shadow: key-shadow($pos, $elevation);
+  }
+}
+
+@mixin shadow-elevation($pos: center, $map: $elevation-map) {
+  @each $elevation, $val in $map {
+    &[shadow-sci-state='#{$elevation}'] {
+      box-shadow: key-shadow($pos, $elevation), ambient-shadow($pos, $elevation);
+
+      @include shadow-source($pos, $elevation);
+    }
+  }
+}

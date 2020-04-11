@@ -10,16 +10,21 @@ plugins.push(new htmlWebpackPlugin({
         removeComments: true
     },
     filename: 'index.html',
-    template:  path.resolve(__dirname, 'index.html'),
+    template:  path.resolve(__dirname, 'demo', 'index.html'),
 }));
 
 module.exports = {
     entry: {
-        app: './src/index.js',
+        app: './demo/index.js',
     },
     output: {
         filename: 'bundle.[hash:4].js',
         path: path.resolve(__dirname, 'dist'),
+    },
+    resolve: {
+        alias: {
+            'shadow-sci': path.resolve(__dirname, 'src/'),
+        },
     },
     module: {
         rules: [

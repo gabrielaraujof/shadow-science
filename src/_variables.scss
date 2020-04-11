@@ -1,0 +1,44 @@
+$offsets-map: (
+  center: (
+    x: 0,
+    y: 0,
+  ),
+  top: (
+    x: 0,
+    y: 1px,
+  ),
+  top-right: (
+    x: -1px,
+    y: 1px,
+  ),
+  right: (
+    x: -1px,
+    y: 0,
+  ),
+  bottom-right: (
+    x: -1px,
+    y: -1px,
+  ),
+  bottom: (
+    x: 0,
+    y: -1px,
+  ),
+  bottom-left: (
+    x: 1px,
+    y: -1px,
+  ),
+  left: (
+    x: 1px,
+    y: 0,
+  ),
+  top-left: (
+    x: 1px,
+    y: 1px,
+  ),
+);
+
+$elevation-map: (
+  resting: 1,
+  raised: 4,
+  floating: 8,
+);
