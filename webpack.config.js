@@ -1,9 +1,12 @@
+const webpack = require('webpack');
 const htmlWebpackPlugin = require('html-webpack-plugin');
+const miniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
+const devMode = process.env.NODE_ENV !== 'production';
 const plugins = [];
 
 plugins.push(new htmlWebpackPlugin({
-    hash: true, //para fazer versionamento
+    hash: true,
     minify: {
         html5: true,
         collapseWhitespace: true,
@@ -12,6 +15,14 @@ plugins.push(new htmlWebpackPlugin({
     filename: 'index.html',
     template:  path.resolve(__dirname, 'demo', 'index.html'),
 }));
+
+plugins.push(new miniCssExtractPlugin({
+    filename: 'shadow-sci.min.css'
+}));
+
+if (!devMode) {
+    plugins.push(new webpack.optimize.ModuleConcatenationPlugin());
+}
 
 module.exports = {
     entry: {
@@ -31,7 +42,12 @@ module.exports = {
             {
                 test: /\.s[ac]ss$/,
                 use: [
-                    "style-loader",
+                    {
+                        loader: miniCssExtractPlugin.loader,
+                        options: {
+                            hmr: devMode
+                        }
+                    },
                     "css-loader",
                     {
                         loader: 'postcss-loader',
@@ -44,7 +60,7 @@ module.exports = {
             },  
         ]
     },
-    mode: process.env.NODE_ENV || 'production',
+    mode: devMode,
     devServer: { 
         port: '7777',
         open: true,
